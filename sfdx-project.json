@@ -1,0 +1,19 @@
+{
+    "packageDirectories": [
+        {
+            "path": "src/sfdc/base",
+            "default": true
+        },
+        {
+            "path": "src/sfdc/personaccounts",
+            "default": false
+        },
+        {
+            "path": "src/sfdc/extras/sf-connect/base",
+            "default": false
+        }
+    ],
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "56.0"
+}
