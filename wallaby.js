@@ -1,35 +1,57 @@
 'use strict';
 
-// Initialize the development environment for unit tests
-process.env.NODE_ENV = 'development';
+//----------------------------------------------
+// Wallaby.js Configuration
+//----------------------------------------------
 
-// Initialize the Wallaby configuration
-module.exports = function() {
+// Default NODE_ENV to 'test' if not already set
+process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 
+/**
+ * Wallaby configuration (ESM style).
+ * Defines how files, tests, and coverage are handled.
+ */
+export default function wallabyConfig() {
     return {
 
-        // Manage runtime execution
+        //------------------------------------------
+        // Runtime Execution
+        //------------------------------------------
         debug: false,
         trace: false,
 
-        // Default the desired code-coverage level
+        //------------------------------------------
+        // Code Coverage Thresholds
+        //------------------------------------------
         lowCoverageThreshold: 90,
+        coverageThresholds: {
+            statements: 90,
+            branches: 85,
+            functions: 90,
+            lines: 90
+        },
 
-        // Define the files processed by Wallaby
+        //------------------------------------------
+        // Files to Include
+        //------------------------------------------
         files: [
-            '!wallaby.js',
             'config/**',
             'lib/**/*.js',
-            '!test/**/*.test.js'
+            '!wallaby.js',
+            '!test/**/*.test.js' // Exclude tests from "files"
         ],
 
-        // Define the tests to process
+        //------------------------------------------
+        // Tests to Execute
+        //------------------------------------------
         tests: [
             'test/**/*.test.js',
-            '!test/cli-interface/**/*.cli.test.js',
+            '!test/cli-interface/**/*.cli.test.js'
         ],
 
-        // Define the files that shouldn't be used to calculate test coverage
+        //------------------------------------------
+        // Files Ignored for Coverage
+        //------------------------------------------
         filesWithNoCoverageCalculated: [
             'lib/**/index.js',
             'lib/qa/**/*.js',
@@ -37,22 +59,28 @@ module.exports = function() {
             'lib/cli-interface/*.js'
         ],
 
-        // Identify the test-framework to leverage
-        testFramework: { type: 'mocha' },
+        //------------------------------------------
+        // Test Framework
+        //------------------------------------------
+        testFramework: {
+            type: 'mocha'
+        },
 
-        // Define the node environment
+        //------------------------------------------
+        // Node Environment
+        //------------------------------------------
         env: {
             type: 'node',
             runner: 'node'
         },
 
-        // Restart test workers with each test-run
+        //------------------------------------------
+        // Worker Management
+        //------------------------------------------
         workers: {
             recycle: true,
             initial: 1,
             regular: 1
         }
-
-    }
-
+    };
 }
